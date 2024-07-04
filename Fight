@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokémon Battle</title>
+    <title>Advanced Pokémon Battle</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,6 +25,14 @@
         .pokemon-attack {
             transform: translateX(50px);
         }
+        .pokemon-hit {
+            animation: hit 0.3s;
+        }
+        @keyframes hit {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-20px); }
+            100% { transform: translateX(0); }
+        }
         #controls {
             margin-top: 20px;
         }
@@ -32,22 +40,64 @@
             padding: 10px 20px;
             font-size: 16px;
         }
+        select {
+            padding: 5px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
-    <h1>Pokémon Battle</h1>
+    <h1>Advanced Pokémon Battle</h1>
+    <div>
+        <label for="pokemon1-select">Choose Pokémon 1:</label>
+        <select id="pokemon1-select">
+            <option value="pikachu">Pikachu</option>
+            <option value="charizard">Charizard</option>
+            <option value="bulbasaur">Bulbasaur</option>
+        </select>
+        <label for="pokemon2-select">Choose Pokémon 2:</label>
+        <select id="pokemon2-select">
+            <option value="charizard">Charizard</option>
+            <option value="pikachu">Pikachu</option>
+            <option value="bulbasaur">Bulbasaur</option>
+        </select>
+    </div>
     <div id="battlefield">
-        <img id="pokemon1" class="pokemon" src="https://img.pokemondb.net/sprites/black-white/anim/normal/pikachu.gif" alt="Pikachu">
-        <img id="pokemon2" class="pokemon" src="https://img.pokemondb.net/sprites/black-white/anim/normal/charizard.gif" alt="Charizard">
+        <img id="pokemon1" class="pokemon" src="" alt="Pokémon 1">
+        <img id="pokemon2" class="pokemon" src="" alt="Pokémon 2">
     </div>
     <div id="controls">
+        <label for="attack-select">Choose Attack:</label>
+        <select id="attack-select">
+            <option value="tackle">Tackle</option>
+            <option value="thunderbolt">Thunderbolt</option>
+            <option value="flamethrower">Flamethrower</option>
+        </select>
         <button onclick="startBattle()">Start Battle</button>
     </div>
 
     <script>
+        const pokemonData = {
+            pikachu: "https://img.pokemondb.net/sprites/black-white/anim/normal/pikachu.gif",
+            charizard: "https://img.pokemondb.net/sprites/black-white/anim/normal/charizard.gif",
+            bulbasaur: "https://img.pokemondb.net/sprites/black-white/anim/normal/bulbasaur.gif"
+        };
+
+        document.getElementById('pokemon1-select').addEventListener('change', updatePokemon);
+        document.getElementById('pokemon2-select').addEventListener('change', updatePokemon);
+
+        function updatePokemon() {
+            const pokemon1 = document.getElementById('pokemon1-select').value;
+            const pokemon2 = document.getElementById('pokemon2-select').value;
+
+            document.getElementById('pokemon1').src = pokemonData[pokemon1];
+            document.getElementById('pokemon2').src = pokemonData[pokemon2];
+        }
+
         function startBattle() {
             const pokemon1 = document.getElementById('pokemon1');
             const pokemon2 = document.getElementById('pokemon2');
+            const attack = document.getElementById('attack-select').value;
 
             // Add attack animation
             pokemon1.classList.add('pokemon-attack');
@@ -56,12 +106,15 @@
             setTimeout(() => {
                 pokemon1.classList.remove('pokemon-attack');
                 // Add a simple hit reaction for the second Pokémon
-                pokemon2.style.transform = 'translateX(-20px)';
+                pokemon2.classList.add('pokemon-hit');
                 setTimeout(() => {
-                    pokemon2.style.transform = 'translateX(0)';
+                    pokemon2.classList.remove('pokemon-hit');
                 }, 300);
             }, 1000);
         }
+
+        // Initialize with default selections
+        updatePokemon();
     </script>
 </body>
 </html>
