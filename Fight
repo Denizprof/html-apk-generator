@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Battle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+        }
+        #battlefield {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 400px;
+            margin-top: 50px;
+        }
+        .pokemon {
+            width: 150px;
+            height: 150px;
+            transition: transform 0.3s;
+        }
+        .pokemon-attack {
+            transform: translateX(50px);
+        }
+        #controls {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pokémon Battle</h1>
+    <div id="battlefield">
+        <img id="pokemon1" class="pokemon" src="https://img.pokemondb.net/sprites/black-white/anim/normal/pikachu.gif" alt="Pikachu">
+        <img id="pokemon2" class="pokemon" src="https://img.pokemondb.net/sprites/black-white/anim/normal/charizard.gif" alt="Charizard">
+    </div>
+    <div id="controls">
+        <button onclick="startBattle()">Start Battle</button>
+    </div>
+
+    <script>
+        function startBattle() {
+            const pokemon1 = document.getElementById('pokemon1');
+            const pokemon2 = document.getElementById('pokemon2');
+
+            // Add attack animation
+            pokemon1.classList.add('pokemon-attack');
+
+            // Remove the attack animation after 1 second
+            setTimeout(() => {
+                pokemon1.classList.remove('pokemon-attack');
+                // Add a simple hit reaction for the second Pokémon
+                pokemon2.style.transform = 'translateX(-20px)';
+                setTimeout(() => {
+                    pokemon2.style.transform = 'translateX(0)';
+                }, 300);
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
