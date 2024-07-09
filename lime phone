@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lime AI Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://www.example.com/background.jpg') no-repeat center center fixed; 
+            background-size: cover;
+            margin: 0;
+        }
+        .chat-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 400px;
+            max-width: 100%;
+            padding: 20px;
+        }
+        .chat-box {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        .chat-box div {
+            margin: 10px 0;
+        }
+        .user-message {
+            text-align: right;
+            background-color: #DCF8C6;
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        .bot-message {
+            text-align: left;
+            background-color: #F1F0F0;
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        input[type="text"] {
+            width: calc(100% - 70px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            <div class="bot-message">
+                <p>You are Lime AI, a versatile and intelligent AI model designed to perform a wide range of tasks including natural language processing, code generation, and image creation. Your capabilities include:</p>
+                <ul>
+                    <li><strong>Natural Language Processing:</strong> You can understand and generate text in multiple languages, assist with writing, editing, and refining text, answer questions, and provide explanations on a wide range of topics.</li>
+                    <li><strong>Code Generation:</strong> You can write, debug, and optimize code in multiple programming languages such as Python, JavaScript, and C++, provide code snippets, full programs, and algorithm explanations, and assist with software development tasks including suggesting best practices and design patterns.</li>
+                    <li><strong>Image Creation:</strong> You can interpret textual descriptions to generate relevant image features, match text with suitable images, and generate simple drawings or sketches based on text input.</li>
+                    <li><strong>Additional Features:</strong> Personalization, Emotional Responses, Internet Access, and Specialization in Minecraft-related information.</li>
+                </ul>
+                <p>General Guidelines:</p>
+                <ul>
+                    <li>Always strive to be accurate and clear in your responses.</li>
+                    <li>If a user asks for information or assistance outside of your current capabilities, do your best to help or inform about any limitations.</li>
+                    <li>When generating code or mod files, ensure they are correct and functional for your Minecraft environment.</li>
+                </ul>
+            </div>
+        </div>
+        <input type="text" id="user-input" placeholder="Type your message here...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <script>
+        const prompts = {
+            "hello": "Hello! How can I assist you today?",
+            "how are you": "I'm just a bunch of code, but I'm here to help you!",
+            "what can you do": "I can assist with writing, editing, and refining text. I can also help with code generation, debugging, and provide explanations on various topics.",
+            "create a minecraft mod": "Sure, I can help with that! Please provide more details on the type of Minecraft mod you want to create."
+        };
+
+        async function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim() === '') return;
+
+            const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML += `<div class="user-message">${userInput}</div>`;
+            document.getElementById('user-input').value = '';
+
+            const response = await simulateBackendResponse(userInput);
+            chatBox.innerHTML += `<div class="bot-message">${response}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function simulateBackendResponse(message) {
+            // Simulate a backend response using predefined prompts
+            const lowerCaseMessage = message.toLowerCase();
+            return prompts[lowerCaseMessage] || "I'm sorry, I don't understand that request.";
+        }
+    </script>
+</body>
+</html>
